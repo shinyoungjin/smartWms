@@ -1,0 +1,106 @@
+server:
+  port: 8088
+
+---
+
+spring:
+  profiles: default
+  cloud:
+    gateway:
+      routes:
+        - id: order
+          uri: http://localhost:8081
+          predicates:
+            - Path=/orders/** 
+        - id: deliveryOrder
+          uri: http://localhost:8082
+          predicates:
+            - Path=/deliveryOrders/** 
+        - id: product
+          uri: http://localhost:8083
+          predicates:
+            - Path=/products/** 
+        - id: stock
+          uri: http://localhost:8084
+          predicates:
+            - Path=/stocks/** 
+        - id: customerCenter
+          uri: http://localhost:8085
+          predicates:
+            - Path= /orderStatusPages/**
+        - id: deliveryPicking
+          uri: http://localhost:8086
+          predicates:
+            - Path=/deliveryPickings/** 
+        - id: deliveryPacking
+          uri: http://localhost:8087
+          predicates:
+            - Path=/deliveryPackings/** 
+        - id: deliveryCenter
+          uri: http://localhost:8088
+          predicates:
+            - Path= /deliveryMgrPages/**
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+
+---
+
+spring:
+  profiles: docker
+  cloud:
+    gateway:
+      routes:
+        - id: order
+          uri: http://order:8080
+          predicates:
+            - Path=/orders/** 
+        - id: deliveryOrder
+          uri: http://deliveryOrder:8080
+          predicates:
+            - Path=/deliveryOrders/** 
+        - id: product
+          uri: http://product:8080
+          predicates:
+            - Path=/products/** 
+        - id: stock
+          uri: http://stock:8080
+          predicates:
+            - Path=/stocks/** 
+        - id: customerCenter
+          uri: http://customerCenter:8080
+          predicates:
+            - Path= /orderStatusPages/**
+        - id: deliveryPicking
+          uri: http://deliveryPicking:8080
+          predicates:
+            - Path=/deliveryPickings/** 
+        - id: deliveryPacking
+          uri: http://deliveryPacking:8080
+          predicates:
+            - Path=/deliveryPackings/** 
+        - id: deliveryCenter
+          uri: http://deliveryCenter:8080
+          predicates:
+            - Path= /deliveryMgrPages/**
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins:
+              - "*"
+            allowedMethods:
+              - "*"
+            allowedHeaders:
+              - "*"
+            allowCredentials: true
+
+server:
+  port: 8080
