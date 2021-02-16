@@ -15,10 +15,21 @@ public class PolicyHandler{
 
     }
 
+    @Autowired
+    OrderRepository orderRepository;
+    
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverDeliveryOrdered_(@Payload DeliveryOrdered deliveryOrdered){
 
         if(deliveryOrdered.isMe()){
+
+            java.util.Optional<Order> orderOptional 
+                = orderRepository.findById(Long.parseLong(deliveryOrdered.getOrderId())); //주문ID를 Long Type으로 변경후 Find
+
+            Order order = orderOptional.get();
+            order.setDeliveryOrderStatus(deliveryOrdered.getDeliveryOrderStatus()); //배송상태를 업데이트
+
+            orderRepository.save(order);
             System.out.println("##### listener  : " + deliveryOrdered.toJson());
         }
     }

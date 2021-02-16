@@ -36,11 +36,13 @@ public class Order {
         //Following code causes dependency to external APIs
         // it is NOT A GOOD PRACTICE. instead, Event-Policy mapping is recommended.
 
-        .external.DeliveryOrder deliveryOrder = new .external.DeliveryOrder();
+        smartwms.external.DeliveryOrder deliveryOrder = new smartwms.external.DeliveryOrder();
+        deliveryOrder.setOrderId            (this.getOrderId());
+        deliveryOrder.setDeliveryOrderStatus("OrderCanceled/deliveryOrderCanceled");
+        
         // mappings goes here
-        Application.applicationContext.getBean(.external.DeliveryOrderService.class)
+        OrderApplication.applicationContext.getBean(smartwms.external.DeliveryOrderService.class)
             .deliveryCancel(deliveryOrder);
-
 
     }
 
