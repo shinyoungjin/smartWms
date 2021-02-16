@@ -16,6 +16,7 @@ public class DeliveryPacking {
     private String logisticsInterfaceStatus;
     private String logisticsInterfaceDate;
     private String productId;
+    private Integer deliveryOrderQty;
 
     @PostPersist
     public void onPostPersist(){
@@ -75,7 +76,11 @@ public class DeliveryPacking {
         this.productId = productId;
     }
 
-
-
+    public Integer getDeliveryOrderQty() {
+        return deliveryOrderQty;
+    }
+    public void setDeliveryOrderQty(Integer deliveryOrderQty) {
+        this.deliveryOrderQty = deliveryOrderQty;
+    }
 
 }

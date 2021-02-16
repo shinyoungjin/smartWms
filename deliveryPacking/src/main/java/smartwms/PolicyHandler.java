@@ -15,15 +15,17 @@ public class PolicyHandler{
 
     }
 
+    @Autowired
+    DeliveryPackingRepository repository;
+
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverPickingOrdered_(@Payload PickingOrdered pickingOrdered){
 
-        if(pickingOrdered.isMe()){
-            System.out.println("##### listener  : " + pickingOrdered.toJson());
-        }
-    }
-    @StreamListener(KafkaProcessor.INPUT)
-    public void wheneverPickingOrdered_(@Payload PickingOrdered pickingOrdered){
+        DeliveryPacking deliveryPacking = new DeliveryPacking();
+        deliveryPacking.setDeliveryOrderId(pickingOrdered.getDeliveryOrderId());
+        deliveryPacking.setPackingStatus  ("DeliveryPacking Started/Step3");
+        deliveryPacking.setLogisticsInterfaceStatus("Logistincs Sended!");
+        repository.save(deliveryPacking);
 
         if(pickingOrdered.isMe()){
             System.out.println("##### listener  : " + pickingOrdered.toJson());
