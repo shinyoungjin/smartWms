@@ -21,13 +21,12 @@ public class PolicyHandler{
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverPickingOrdered_(@Payload PickingOrdered pickingOrdered){
 
-        DeliveryPacking deliveryPacking = new DeliveryPacking();
-        deliveryPacking.setDeliveryOrderId(pickingOrdered.getDeliveryOrderId());
-        deliveryPacking.setPackingStatus  ("DeliveryPacking Started/Step3");
-        deliveryPacking.setLogisticsInterfaceStatus("Logistincs Sended!");
-        repository.save(deliveryPacking);
-
         if(pickingOrdered.isMe()){
+            DeliveryPacking deliveryPacking = new DeliveryPacking();
+            deliveryPacking.setDeliveryOrderId(pickingOrdered.getDeliveryOrderId());
+            deliveryPacking.setPackingStatus  ("DeliveryPacking Started/Step3");
+            // deliveryPacking.setLogisticsInterfaceStatus("Logistics Sended!!!!!!");
+            repository.save(deliveryPacking);
             System.out.println("##### listener  : " + pickingOrdered.toJson());
         }
     }

@@ -20,16 +20,18 @@ public class DeliveryPacking {
 
     @PostPersist
     public void onPostPersist(){
-        LogisticsInterfaced logisticsInterfaced = new LogisticsInterfaced();
-        BeanUtils.copyProperties(this, logisticsInterfaced);
-        logisticsInterfaced.publishAfterCommit();
 
+        if( this.getLogisticsInterfaceStatus().equals("Y") ){
+            LogisticsInterfaced logisticsInterfaced = new LogisticsInterfaced();
+            BeanUtils.copyProperties(this, logisticsInterfaced);
+            logisticsInterfaced.publishAfterCommit();
+        }
 
-        PackingConfirmed packingConfirmed = new PackingConfirmed();
-        BeanUtils.copyProperties(this, packingConfirmed);
-        packingConfirmed.publishAfterCommit();
-
-
+        if( this.getDeliveryOrderId() != null ){
+            PackingConfirmed packingConfirmed = new PackingConfirmed();
+            BeanUtils.copyProperties(this, packingConfirmed);
+            packingConfirmed.publishAfterCommit();
+        }
     }
 
 
