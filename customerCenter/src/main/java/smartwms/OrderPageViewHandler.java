@@ -15,21 +15,21 @@ public class OrderPageViewHandler {
 
 
     @Autowired
-    private OrderPageRepository orderPageRepository;
+    private OrderPageRepository repository;
 
     @StreamListener(KafkaProcessor.INPUT)
     public void whenOrdered_then_CREATE_1 (@Payload Ordered ordered) {
         try {
             if (ordered.isMe()) {
                 // view 객체 생성
-                  = new ();
+                OrderPage oPage = new OrderPage();
                 // view 객체에 이벤트의 Value 를 set 함
-                .setOrderId(.getOrderId());
-                .setOrderStatus(.getOrderStatus());
-                .setOrderQty(.getOrderQty());
-                .setProductId(.getProductId());
+                oPage.setOrderId    (ordered.getOrderId());
+                oPage.setOrderStatus(ordered.getOrderStatus());
+                oPage.setOrderQty   (ordered.getOrderQty());
+                oPage.setProductId  (ordered.getProductId());
                 // view 레파지 토리에 save
-                Repository.save();
+                repository.save(oPage);
             }
         }catch (Exception e){
             e.printStackTrace();
@@ -42,11 +42,15 @@ public class OrderPageViewHandler {
         try {
             if (deliveryOrdered.isMe()) {
                 // view 객체 조회
-                List<> List = Repository.findByOrderId(.getOrderId());
-                for(  : List){
+                List<OrderPage> List = repository.findByOrderId(deliveryOrdered.getOrderId());
+                for(OrderPage oPage : List){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
                     // view 레파지 토리에 save
-                    Repository.save();
+                    oPage.setOrderId        (deliveryOrdered.getOrderId());
+                    oPage.setDeliveryOrderId(deliveryOrdered.getDeliveryOrderId());
+                    oPage.setDeliveryStatus (deliveryOrdered.getDeliveryOrderStatus());
+
+                    repository.save(oPage);
                 }
             }
         }catch (Exception e){
@@ -58,33 +62,13 @@ public class OrderPageViewHandler {
         try {
             if (orderCanceled.isMe()) {
                 // view 객체 조회
-                List<> List = Repository.findByOrderId(.getOrderId());
-                for(  : List){
+                List<OrderPage> List = repository.findByOrderId(orderCanceled.getOrderId());
+                for(OrderPage oPage : List){
                     // view 객체에 이벤트의 eventDirectValue 를 set 함
                     // view 레파지 토리에 save
-                    Repository.save();
-                }
-            }
-        }catch (Exception e){
-            e.printStackTrace();
-        }
-    }
-    @StreamListener(KafkaProcessor.INPUT)
-    public void when_then_UPDATE_(@Payload  ) {
-        try {
-            if (.isMe()) {
-                // view 객체 조회
-                List<> List = Repository.findByOrderId(.getOrderId());
-                for(  : List){
-                    // view 객체에 이벤트의 eventDirectValue 를 set 함
-                    // view 레파지 토리에 save
-                    Repository.save();
-                }
-                List<> List = Repository.findBy(.get());
-                for(  : List){
-                    // view 객체에 이벤트의 eventDirectValue 를 set 함
-                    // view 레파지 토리에 save
-                    Repository.save();
+                    oPage.setOrderId    (orderCanceled.getOrderId());
+                    oPage.setOrderStatus(orderCanceled.getOrderStatus());
+                    repository.save(oPage);
                 }
             }
         }catch (Exception e){

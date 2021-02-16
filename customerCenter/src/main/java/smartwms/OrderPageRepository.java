@@ -7,9 +7,7 @@ import java.util.List;
 
 public interface OrderPageRepository extends CrudRepository<OrderPage, Long> {
 
-    List<> findByOrderId(String orderId);
-    List<> findByOrderId(String orderId);
-    List<> findByOrderId(String orderId);
-    List<> findBy( );
+    List<OrderPage> findByOrderId(String orderId);
+    // List<> findBy( );
 
 }
