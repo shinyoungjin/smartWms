@@ -17,6 +17,7 @@ public class Stock {
     private Integer stockIncreaseQty;
     private String productWhsDate;
     private String createDate;
+    private String updateDate;
 
     @PostPersist
     public void onPostPersist(){
@@ -34,7 +35,6 @@ public class Stock {
         BeanUtils.copyProperties(this, stockIncreased);
         stockIncreased.publishAfterCommit();
 
-
     }
 
     @PrePersist
@@ -43,9 +43,7 @@ public class Stock {
         BeanUtils.copyProperties(this, stockRegistered);
         stockRegistered.publishAfterCommit();
 
-
     }
-
 
     public Long getId() {
         return id;
@@ -92,12 +90,13 @@ public class Stock {
     public String getCreateDate() {
         return createDate;
     }
-
     public void setCreateDate(String createDate) {
         this.createDate = createDate;
     }
-
-
-
-
+    public String getUpdateDate() {
+        return updateDate;
+    }
+    public void setUpdateDate(String updateDate) {
+        this.updateDate = updateDate;
+    }
 }

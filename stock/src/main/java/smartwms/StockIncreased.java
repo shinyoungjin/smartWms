@@ -1,4 +1,4 @@
-package SMARTWMS;
+package smartwms;
 
 public class StockIncreased extends AbstractEvent {
 
@@ -7,7 +7,6 @@ public class StockIncreased extends AbstractEvent {
     private Integer stockQty;
     private Integer stockAssignQty;
     private Integer stockWhsQty;
-    private Date stockWhsData;
 
     public StockIncreased(){
         super();
@@ -47,12 +46,5 @@ public class StockIncreased extends AbstractEvent {
 
     public void setStockWhsQty(Integer stockWhsQty) {
         this.stockWhsQty = stockWhsQty;
-    }
-    public Date getStockWhsData() {
-        return stockWhsData;
-    }
-
-    public void setStockWhsData(Date stockWhsData) {
-        this.stockWhsData = stockWhsData;
     }
 }
