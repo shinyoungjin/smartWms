@@ -23,8 +23,6 @@ public class Order {
         Ordered ordered = new Ordered();
         BeanUtils.copyProperties(this, ordered);
         ordered.publishAfterCommit();
-
-
     }
 
     @PreRemove
