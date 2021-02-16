@@ -1,4 +1,4 @@
-package SMARTWMS;
+package smartwms;
 
 public class ProductChanged extends AbstractEvent {
 
