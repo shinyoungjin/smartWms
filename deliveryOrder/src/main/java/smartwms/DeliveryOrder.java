@@ -21,15 +21,16 @@ public class DeliveryOrder {
 
     @PostPersist
     public void onPostPersist(){
+        
         DeliveryOrdered deliveryOrdered = new DeliveryOrdered();
         BeanUtils.copyProperties(this, deliveryOrdered);
         deliveryOrdered.publishAfterCommit();
 
-
+        /*
         DeliveryOrderCanceled deliveryOrderCanceled = new DeliveryOrderCanceled();
         BeanUtils.copyProperties(this, deliveryOrderCanceled);
         deliveryOrderCanceled.publishAfterCommit();
-
+        */
 
     }
 

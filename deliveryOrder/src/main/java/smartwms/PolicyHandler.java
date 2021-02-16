@@ -25,10 +25,13 @@ public class PolicyHandler{
             DeliveryOrder deliveryOrder = new DeliveryOrder();
             deliveryOrder.setOrderId  (ordered.getOrderId());
             deliveryOrder.setProductId(ordered.getProductId());
+            deliveryOrder.setDeliveryOrderId(ordered.getOrderId()); //출고지시 번호를 주문번호로 매핑
             deliveryOrder.setOrderQty (ordered.getOrderQty());
 
             deliveryOrder.setDeliveryOrderQty   (ordered.getOrderQty());
             deliveryOrder.setDeliveryOrderStatus("Delivery Order Started/Step1");
+
+            repository.save(deliveryOrder); //저장
             
             System.out.println("##### listener  : " + ordered.toJson());
         }
