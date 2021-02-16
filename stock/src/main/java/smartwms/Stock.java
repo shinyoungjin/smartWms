@@ -21,6 +21,7 @@ public class Stock {
 
     @PostPersist
     public void onPostPersist(){
+
         StockAssigned stockAssigned = new StockAssigned();
         BeanUtils.copyProperties(this, stockAssigned);
         stockAssigned.publishAfterCommit();

@@ -38,6 +38,9 @@ public class PolicyHandler{
             stock.setProductId (productRegistered.getProductId());
             stock.setStockQty  (1000); //임의로 1000으로 세팅
             stock.setCreateDate(this.timestamp);
+            stock.setUpdateDate(this.timestamp);
+            repository.save(stock); //저장
+
             System.out.println("##### listener  : " + productRegistered.toJson());
         }
     }
@@ -55,6 +58,7 @@ public class PolicyHandler{
             stock.setProductId     (deliveryOrdered.getProductId());
             stock.setStockAssignQty(deliveryOrdered.getDeliveryOrderQty());
             stock.setUpdateDate    (this.timestamp);
+            repository.save(stock); //저장
             
             System.out.println("##### listener  : " + deliveryOrdered.toJson());
         }
@@ -72,6 +76,7 @@ public class PolicyHandler{
             stock.setProductId (packingConfirmed.getProductId());
             stock.setStockQty  (packingConfirmed.getDeliveryOrderQty()); // 원래 재고건수에서 출고지시건수를 빼야하는데, 일단 로직 제외
             stock.setUpdateDate(this.timestamp);
+            repository.save(stock); //저장
             
             System.out.println("##### listener  : " + packingConfirmed.toJson());
         }
