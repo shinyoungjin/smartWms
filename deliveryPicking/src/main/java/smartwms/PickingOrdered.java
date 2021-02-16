@@ -8,7 +8,6 @@ public class PickingOrdered extends AbstractEvent {
     private String pickingStatus;
     private String orderConfirmPrintYn;
     private String invoicePrintYn;
-    private String pickingOrderPrintYn;
     private String invoiceNo;
     private String productId;
 
@@ -53,13 +52,6 @@ public class PickingOrdered extends AbstractEvent {
 
     public void setInvoicePrintYn(String invoicePrintYn) {
         this.invoicePrintYn = invoicePrintYn;
-    }
-    public String getPickingPrintYn() {
-        return pickingOrderPrintYn;
-    }
-
-    public void setPickingPrintYn(String pickingOrderPrintYn) {
-        this.pickingOrderPrintYn = pickingOrderPrintYn;
     }
     public String getInvoiceNo() {
         return invoiceNo;

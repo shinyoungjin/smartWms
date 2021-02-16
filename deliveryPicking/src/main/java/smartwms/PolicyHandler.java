@@ -15,10 +15,20 @@ public class PolicyHandler{
 
     }
 
+    @Autowired
+    DeliveryPickingRepository repository;    
+
     @StreamListener(KafkaProcessor.INPUT)
     public void wheneverDeliveryOrdered_(@Payload DeliveryOrdered deliveryOrdered){
 
         if(deliveryOrdered.isMe()){
+
+            DeliveryPicking deliveryPicking = new DeliveryPicking();
+            deliveryPicking.setDeliveryOrderId (deliveryOrdered.getDeliveryOrderId());
+            deliveryPicking.setDeliveryOrderQty(deliveryOrdered.getDeliveryOrderQty());
+            deliveryPicking.setPickingStatus   ("DeliveryPicking Started/Step2");
+            repository.save(deliveryPicking);
+
             System.out.println("##### listener  : " + deliveryOrdered.toJson());
         }
     }

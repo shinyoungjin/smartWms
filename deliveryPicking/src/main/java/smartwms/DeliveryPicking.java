@@ -18,6 +18,7 @@ public class DeliveryPicking {
     private String pickingStatus;
     private String invoiceNo;
     private String productId;
+    private Integer deliveryOrderQty;
 
     @PostPersist
     public void onPostPersist(){
@@ -101,7 +102,11 @@ public class DeliveryPicking {
         this.productId = productId;
     }
 
-
-
+    public Integer getDeliveryOrderQty() {
+        return deliveryOrderQty;
+    }
+    public void setDeliveryOrderQty(Integer deliveryOrderQty) {
+        this.deliveryOrderQty = deliveryOrderQty;
+    }
 
 }
