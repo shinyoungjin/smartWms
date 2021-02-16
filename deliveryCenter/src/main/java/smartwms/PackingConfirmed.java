@@ -6,7 +6,6 @@ public class PackingConfirmed extends AbstractEvent {
     private String deliveryOrderId;
     private String packingStatus;
     private String logisticsInterfaceStatus;
-    private Date logisticsInterfaceDate;
     private String logisticsInterfaceDate;
     private String productId;
 
@@ -37,13 +36,6 @@ public class PackingConfirmed extends AbstractEvent {
 
     public void setLogisticsInterfaceStatus(String logisticsInterfaceStatus) {
         this.logisticsInterfaceStatus = logisticsInterfaceStatus;
-    }
-    public Date getLogisticsInterfaceDate() {
-        return logisticsInterfaceDate;
-    }
-
-    public void setLogisticsInterfaceDate(Date logisticsInterfaceDate) {
-        this.logisticsInterfaceDate = logisticsInterfaceDate;
     }
     public String getLogisticsInterfaceDate() {
         return logisticsInterfaceDate;

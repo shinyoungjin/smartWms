@@ -7,8 +7,6 @@ import java.util.List;
 
 public interface DeliveryPageRepository extends CrudRepository<DeliveryPage, Long> {
 
-    List<> findByDeliveryOrderId(String deliveryOrderId);
-    List<> findByDeliveryOrderId(String deliveryOrderId);
-    List<> findByDeliveryOrderId(String deliveryOrderId);
+    List<DeliveryPage> findByDeliveryOrderId(String deliveryOrderId);
 
 }
