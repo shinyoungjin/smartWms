@@ -22,28 +22,29 @@ public class DeliveryPicking {
 
     @PostPersist
     public void onPostPersist(){
-        OrderConfirmPrinted orderConfirmPrinted = new OrderConfirmPrinted();
-        BeanUtils.copyProperties(this, orderConfirmPrinted);
-        orderConfirmPrinted.publishAfterCommit();
-
-
-        InvoicePrinted invoicePrinted = new InvoicePrinted();
-        BeanUtils.copyProperties(this, invoicePrinted);
-        invoicePrinted.publishAfterCommit();
-
 
         PickingOrdered pickingOrdered = new PickingOrdered();
         BeanUtils.copyProperties(this, pickingOrdered);
         pickingOrdered.publishAfterCommit();
+        
+        if( this.getPickingOrderPrintYn().equals("Y") ){
+            PickingOrderPrinted pickingOrderPrinted = new PickingOrderPrinted();
+            BeanUtils.copyProperties(this, pickingOrderPrinted);
+            pickingOrderPrinted.publishAfterCommit();
+        }
 
+        if( this.getOrderConfirmPrintYn().equals("Y") ){
+            OrderConfirmPrinted orderConfirmPrinted = new OrderConfirmPrinted();
+            BeanUtils.copyProperties(this, orderConfirmPrinted);
+            orderConfirmPrinted.publishAfterCommit();
+        }
 
-        PickingOrderPrinted pickingOrderPrinted = new PickingOrderPrinted();
-        BeanUtils.copyProperties(this, pickingOrderPrinted);
-        pickingOrderPrinted.publishAfterCommit();
-
-
+        if( this.getInvoicePrintYn().equals("Y") ){
+            InvoicePrinted invoicePrinted = new InvoicePrinted();
+            BeanUtils.copyProperties(this, invoicePrinted);
+            invoicePrinted.publishAfterCommit();
+        }
     }
-
 
     public Long getId() {
         return id;

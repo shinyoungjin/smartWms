@@ -24,6 +24,7 @@ public class PolicyHandler{
         if(deliveryOrdered.isMe()){
 
             DeliveryPicking deliveryPicking = new DeliveryPicking();
+            deliveryPicking.setProductId       (deliveryOrdered.getProductId());
             deliveryPicking.setDeliveryOrderId (deliveryOrdered.getDeliveryOrderId());
             deliveryPicking.setDeliveryOrderQty(deliveryOrdered.getDeliveryOrderQty());
             deliveryPicking.setPickingStatus   ("DeliveryPicking Started/Step2");
