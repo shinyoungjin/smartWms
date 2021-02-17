@@ -1,4 +1,4 @@
-# 온라인몰 배송물류시스템(Smart-WMS)
+# 온라인몰 배송물류관리시스템(Smart-WMS)
 # (Warehouse Management System)
 
 ![image](https://user-images.githubusercontent.com/77368724/108147670-a5cda580-7112-11eb-89b0-0dfa32a07296.png)
@@ -50,7 +50,7 @@
 # 분석/설계
 
 ### Event Storming 결과
-![eventStorming](https://user-images.githubusercontent.com/77368612/107878112-d3003500-6f13-11eb-8fd8-aaf056f10f56.png)
+![image](https://user-images.githubusercontent.com/77368724/108155361-16c88980-7122-11eb-97a9-43f8a0ec4344.png)
 　  
 　     
 ### 기능적 요구사항 검증(1)
