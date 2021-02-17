@@ -207,8 +207,10 @@ http localhost:8082/deliveryOrders/1
 # 출고지시(deliveryOrder) 서비스를 잠시 내려놓음
 kubectl delete deploy deliveryorder -n skuser07
 ```
-- 동기식 호출에서는 호출 시간에 따른 타임 커플링이 발생하며,
-- "출고지시(deliveryOrder)" 시스템이 장애가 나면 "주문 취소"를 진행하지 못함
+
+```
+# 동기식 호출에서는 호출 시간에 따른 타임 커플링이 발생하며, "출고지시(deliveryOrder)" 시스템이 장애가 나면 "주문 취소"를 진행하지 못함
+```
 ![image](https://user-images.githubusercontent.com/77368724/108172777-95342400-7140-11eb-93bc-db0638183130.png)
 ![image](https://user-images.githubusercontent.com/77368724/108172903-c3196880-7140-11eb-89dc-9cdfbdea5a6f.png)
 　  
@@ -226,20 +228,20 @@ kubectl create deploy deliveryorder --image=skuser07acr.azurecr.io/deliveryorder
    
 # Gateway
 - gateway > application.yml
-![20210215_154035_15](https://user-images.githubusercontent.com/77368612/107913732-43569700-6fa4-11eb-96e4-5ffac8ad85cd.png)
+![image](https://user-images.githubusercontent.com/77368724/108174719-286e5900-7143-11eb-8fae-179450a7be10.png)
     
 　  
 　  
 
 - Gateway의 External-IP 확인
 
-![20210215_154035_16](https://user-images.githubusercontent.com/77368612/107913733-43ef2d80-6fa4-11eb-98b4-dbe191a93c83.png)
+![image](https://user-images.githubusercontent.com/77368724/108174871-5eabd880-7143-11eb-83a0-7542b1859e13.png)
     
 　  
 　  
-- External-IP 로 Reservation서비스에 접근
+- External-IP 로 Order 서비스에 접근
 
-![20210215_154035_17](https://user-images.githubusercontent.com/77368612/107913727-42be0080-6fa4-11eb-90b5-cf7b0e0cbe04.png)
+![image](https://user-images.githubusercontent.com/77368724/108175106-ad597280-7143-11eb-86d3-36d88db1b1d6.png)
     
 　  
 　      
@@ -252,37 +254,57 @@ kubectl create deploy deliveryorder --image=skuser07acr.azurecr.io/deliveryorder
 
 ```
 # Namespace 생성
-kubectl create ns skteam02
+kubectl create ns skuser07
 
 # 소스를 가져와 각각의 MSA 별로 빌드 진행
 
 # 도커라이징 : Azure Registry에 Image Push 
-az acr build --registry skteam02 --image skteam02.azurecr.io/reservation:latest .  
-az acr build --registry skteam02 --image skteam02.azurecr.io/deposit:latest . 
-az acr build --registry skteam02 --image skteam02.azurecr.io/restaurant:latest .   
-az acr build --registry skteam02 --image skteam02.azurecr.io/customercenter:latest .   
-az acr build --registry skteam02 --image skteam02.azurecr.io/gateway:latest . 
+az acr build --registry skuser07acr --image skuser07acr.azurecr.io/order:latest . 
+az acr build --registry skuser07acr --image skuser07acr.azurecr.io/deliveryorder:latest . 
+az acr build --registry skuser07acr --image skuser07acr.azurecr.io/deliverypicking:latest . 
+az acr build --registry skuser07acr --image skuser07acr.azurecr.io/deliverypacking:latest . 
+az acr build --registry skuser07acr --image skuser07acr.azurecr.io/product:latest . 
+az acr build --registry skuser07acr --image skuser07acr.azurecr.io/stock:latest . 
+az acr build --registry skuser07acr --image skuser07acr.azurecr.io/customercenter:latest . 
+az acr build --registry skuser07acr --image skuser07acr.azurecr.io/deliverycenter:latest . 
+az acr build --registry skuser07acr --image skuser07acr.azurecr.io/gateway:latest . 
 
 # 컨테이터라이징 : Deploy, Service 생성
-kubectl create deploy reservation --image=skteam02.azurecr.io/reservation:latest -n skteam02
-kubectl expose deploy reservation --type="ClusterIP" --port=8080 -n skteam02
-kubectl create deploy deposit --image=skteam02.azurecr.io/deposit:latest -n skteam02
-kubectl expose deploy deposit --type="ClusterIP" --port=8080 -n skteam02
-kubectl create deploy restaurant --image=skteam02.azurecr.io/restaurant:latest -n skteam02
-kubectl expose deploy restaurant --type="ClusterIP" --port=8080 -n skteam02
-kubectl create deploy customercenter --image=skteam02.azurecr.io/customercenter:latest -n skteam02
-kubectl expose deploy customercenter --type="ClusterIP" --port=8080 -n skteam02
-kubectl create deploy gateway --image=skteam02.azurecr.io/gateway:latest -n skteam02
-kubectl expose deploy gateway --type=LoadBalancer --port=8080 -n skteam02
+kubectl create deploy order --image=skuser07acr.azurecr.io/order:latest -n skuser07
+kubectl expose deploy order --type="ClusterIP" --port=8080 -n skuser07
 
-#kubectl get all -n skteam02
+kubectl create deploy deliveryorder --image=skuser07acr.azurecr.io/deliveryorder:latest -n skuser07
+kubectl expose deploy deliveryorder --type="ClusterIP" --port=8080 -n skuser07
+
+kubectl create deploy deliverypicking --image=skuser07acr.azurecr.io/deliverypicking:latest -n skuser07
+kubectl expose deploy deliverypicking --type="ClusterIP" --port=8080 -n skuser07
+
+kubectl create deploy deliverypacking --image=skuser07acr.azurecr.io/deliverypacking:latest -n skuser07
+kubectl expose deploy deliverypacking --type="ClusterIP" --port=8080 -n skuser07
+
+kubectl create deploy product --image=skuser07acr.azurecr.io/product:latest -n skuser07
+kubectl expose deploy product --type="ClusterIP" --port=8080 -n skuser07
+
+kubectl create deploy stock --image=skuser07acr.azurecr.io/stock:latest -n skuser07
+kubectl expose deploy stock --type="ClusterIP" --port=8080 -n skuser07
+
+kubectl create deploy customercenter --image=skuser07acr.azurecr.io/customercenter:latest -n skuser07
+kubectl expose deploy customercenter --type="ClusterIP" --port=8080 -n skuser07
+
+kubectl create deploy deliverycenter --image=skuser07acr.azurecr.io/deliverycenter:latest -n skuser07
+kubectl expose deploy deliverycenter --type="ClusterIP" --port=8080 -n skuser07
+
+kubectl create deploy gateway --image=skuser07acr.azurecr.io/gateway:latest -n skuser07
+kubectl expose deploy gateway --type="LoadBalancer" --port=8080 -n skuser07
+
+#kubectl get all -n skuser07
 ```
     
 　  
 　  
 - Deploy 확인
 
-![20210215_155905_18](https://user-images.githubusercontent.com/77368612/107914935-c7118300-6fa6-11eb-83c3-169869bcd5ce.png)
+![image](https://user-images.githubusercontent.com/77368724/108175822-8a7b8e00-7144-11eb-9d10-41156d515025.png)
     
 　  
 　  
