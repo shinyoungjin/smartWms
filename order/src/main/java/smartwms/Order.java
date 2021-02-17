@@ -20,6 +20,7 @@ public class Order {
 
     @PostPersist
     public void onPostPersist(){
+        // 초기 주문 orderStatus : Ordered
         Ordered ordered = new Ordered();
         BeanUtils.copyProperties(this, ordered);
         ordered.publishAfterCommit();
@@ -27,6 +28,8 @@ public class Order {
 
     @PreRemove
     public void onPreRemove(){
+
+        // 주문 취소 orderStatus : OrderCanceled
         OrderCanceled orderCanceled = new OrderCanceled();
         BeanUtils.copyProperties(this, orderCanceled);
         orderCanceled.publishAfterCommit();
@@ -36,7 +39,7 @@ public class Order {
 
         smartwms.external.DeliveryOrder deliveryOrder = new smartwms.external.DeliveryOrder();
         deliveryOrder.setOrderId            (this.getOrderId());
-        deliveryOrder.setDeliveryOrderStatus("OrderCanceled/deliveryOrderCanceled");
+        deliveryOrder.setDeliveryOrderStatus("DeliveryOrderCanceled");
         
         // mappings goes here
         OrderApplication.applicationContext.getBean(smartwms.external.DeliveryOrderService.class)
@@ -44,6 +47,14 @@ public class Order {
 
     }
 
+    @PrePersist
+    public void onPrePersist(){ 
+        try {
+            Thread.currentThread().sleep((long) (800 + Math.random() * 220));
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+    }
 
     public Long getId() {
         return id;
