@@ -160,6 +160,7 @@ http localhost:8082/deliveryOrders/1
 
 
 
+
 # Polyglot
 
 - "Order,DeliveryOrder,DeliveryPicking,DeliveryPacking,Stock,Product"는 H2로 구현하고, "CustomerCenter,DeliveryCenter" 서비스의 경우 Hsql로 구현하여 MSA간의 서로 다른 종류의 Database에도 문제없이 작동하여 다형성을 만족하는지 확인하였다.
@@ -172,6 +173,7 @@ http localhost:8082/deliveryOrders/1
 - CustomerCenter, DeliveryCenter의 pom.xml 파일 설정
 
 ![image](https://user-images.githubusercontent.com/77368724/108161396-49787f00-712e-11eb-97be-c7f9a98848df.png)
+
 
 
 
@@ -220,7 +222,8 @@ kubectl create deploy deliveryorder --image=skuser07acr.azurecr.io/deliveryorder
     
 　  
     
-　     
+
+
 # Gateway
 
 - gateway > application.yml
@@ -241,7 +244,8 @@ kubectl create deploy deliveryorder --image=skuser07acr.azurecr.io/deliveryorder
     
 　  
 　      
-　  　  
+
+
 # Deploy
 
 - Deploy API 호출
@@ -301,7 +305,8 @@ kubectl expose deploy gateway --type="LoadBalancer" --port=8080 -n skuser07
     
 　  
 　  
-    
+
+
 # Circuit Breaker
 ```
 1. 서킷 브레이킹 프레임워크의 선택: Spring FeignClient + Hystrix 옵션을 사용하여 구현함.  
@@ -340,7 +345,8 @@ kubectl expose deploy gateway --type="LoadBalancer" --port=8080 -n skuser07
     
 　  
 　  
-   
+
+
 # Auto Scale(HPA)
 ```
 1. 앞서 CB 는 시스템을 안정되게 운영할 수 있게 해줬지만 사용자의 요청을 100% 받아들여주지 못했기 때문에 
@@ -419,7 +425,8 @@ kubectl apply -f deployment.yml
 ![image](https://user-images.githubusercontent.com/77368724/108210402-d93e1d80-716e-11eb-8cf3-0ca64d29d564.png)
     
 　  
-　  
+　 
+  
    　  　  
 # Self-healing (Liveness Probe)
 
