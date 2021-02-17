@@ -55,7 +55,7 @@
 　     
 ### 기능적 요구사항 검증(1)
 
-![1](https://user-images.githubusercontent.com/77368612/107893185-15099500-6f6d-11eb-8a93-acf90d472651.png)
+![image](https://user-images.githubusercontent.com/77368724/108157053-3dd48a80-7125-11eb-8899-04f56fa6b42a.png)
 
     - 고객이 예약서비스에서 식사를 위한 식당을 예약한다.(OK)
     - 고객이 예약 보증금을 결제한다.(OK)
@@ -66,7 +66,7 @@
 　  
 　  
 ### 기능적 요구사항 검증(2)   
-![2](https://user-images.githubusercontent.com/77368612/107893188-189d1c00-6f6d-11eb-9925-89954a8166c7.png)
+![image](https://user-images.githubusercontent.com/77368724/108157080-4a58e300-7125-11eb-9f12-40300ee7fdff.png)
 
     - 고객이 예약을 취소할 수 있다.(OK)
     - 예약을 취소하면 보증금을 환불한다.(OK)
@@ -76,7 +76,7 @@
 　  
 　  
 ### 기능적 요구사항 검증(3)   
-![3](https://user-images.githubusercontent.com/77368612/107893192-1aff7600-6f6d-11eb-8266-2ea3bdb817fe.png)
+![image](https://user-images.githubusercontent.com/77368724/108157107-55137800-7125-11eb-9091-45edc65736e1.png)
 
     - 고객이 모든 진행내역을 볼 수 있어야 한다.(OK)
     
