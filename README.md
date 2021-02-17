@@ -468,18 +468,18 @@ kubectl apply -f deployment.yml
 
 - deployment.yml 에 Liveness Probe 옵션 추가
 
-![image](https://user-images.githubusercontent.com/77368612/107970557-99532b00-6ff4-11eb-82bf-312a9f8f3c8b.png)
+![image](https://user-images.githubusercontent.com/77368724/108221109-c7fb0e00-717a-11eb-8573-24e325dee34b.png)
     
 　  
 　  
-- reservation pod에 liveness가 적용된 부분 확인
+- order pod에 liveness가 적용된 부분 확인
 
-![20210215_181110_32](https://user-images.githubusercontent.com/77368612/107926561-37c19b00-6fb9-11eb-9fc0-98b22505b3bd.png)
+![image](https://user-images.githubusercontent.com/77368724/108221361-0ee90380-717b-11eb-9feb-f094af70a201.png)
 
     
 　  
 　  
-- reservation 서비스의 liveness가 발동되어 3번 retry 시도 한 부분 확인
+- order 서비스의 liveness가 발동되어 5번 retry 시도 한 부분 확인
 
-![20210215_180742_31](https://user-images.githubusercontent.com/77368612/107926211-c255ca80-6fb8-11eb-93b5-200e3e2c36a0.png)
+![image](https://user-images.githubusercontent.com/77368724/108221762-7ef78980-717b-11eb-940b-db373c62c98a.png)
 
