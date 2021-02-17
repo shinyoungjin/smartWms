@@ -137,8 +137,6 @@ mvn spring-boot:run
 
 ![image](https://user-images.githubusercontent.com/77368724/108159052-91e16e00-7129-11eb-8228-12ebb543180b.png)
     
-　  
-　  
    
 - Entity Pattern 과 Repository Pattern 을 적용하여 JPA 를 통하여 다양한 데이터소스 유형 (RDB or NoSQL) 에 대한 별도의 처리가 없도록 데이터 접근 어댑터를 자동 생성하기 위하여 Spring Data REST 의 RestRepository 를 적용하였다
 
@@ -160,6 +158,8 @@ http localhost:8082/deliveryOrders/1
 ```
 
 
+
+
 # Polyglot
 
 - "Order,DeliveryOrder,DeliveryPicking,DeliveryPacking,Stock,Product"는 H2로 구현하고, "CustomerCenter,DeliveryCenter" 서비스의 경우 Hsql로 구현하여 MSA간의 서로 다른 종류의 Database에도 문제없이 작동하여 다형성을 만족하는지 확인하였다.
@@ -175,6 +175,8 @@ http localhost:8082/deliveryOrders/1
 
 
 
+
+
 # Req/Resp
 ```
 1. 분석단계에서의 조건 중 하나로 "주문(order) 취소 → 출고지시(deliveryOrder)취소" 간의 호출은 동기식 일관성을 유지하는
@@ -184,15 +186,11 @@ http localhost:8082/deliveryOrders/1
 호출하도록 한다. 
 ```
     
-　  
-    
     
 - 출고지시 서비스를 호출하기 위하여 Stub과 (FeignClient) 를 이용하여 Service 대행 인터페이스 (Proxy) 를 구현  (DeliveryOrderService.java)
 
 ![image](https://user-images.githubusercontent.com/77368724/108170266-48028300-713d-11eb-8bec-e203e6f5c9d1.png)
 
-    
-　  
     
 
 - "주문 취소"를 받은 직후(@PostPersist) "출고지시 취소"를 요청하도록 처리
@@ -221,11 +219,8 @@ kubectl create deploy deliveryorder --image=skuser07acr.azurecr.io/deliveryorder
 ![image](https://user-images.githubusercontent.com/77368724/108173185-2acfb380-7141-11eb-8585-19a22d76f55b.png)
     
 　  
-　  
     
-　  
-　  
-   
+　     
 # Gateway
 
 - gateway > application.yml
@@ -234,7 +229,6 @@ kubectl create deploy deliveryorder --image=skuser07acr.azurecr.io/deliveryorder
     
 　  
 　  
-
 - Gateway의 External-IP 확인
 
 ![image](https://user-images.githubusercontent.com/77368724/108174871-5eabd880-7143-11eb-83a0-7542b1859e13.png)
@@ -247,9 +241,7 @@ kubectl create deploy deliveryorder --image=skuser07acr.azurecr.io/deliveryorder
     
 　  
 　      
-　  
-　  
-
+　  　  
 # Deploy
 
 - Deploy API 호출
@@ -301,8 +293,7 @@ kubectl expose deploy gateway --type="LoadBalancer" --port=8080 -n skuser07
 
 #kubectl get all -n skuser07
 ```
-    
-　  
+    　  
 　  
 - Deploy 확인
 
@@ -310,23 +301,13 @@ kubectl expose deploy gateway --type="LoadBalancer" --port=8080 -n skuser07
     
 　  
 　  
-      
-      
     
-　  
-　  
-    
-
 # Circuit Breaker
 ```
 1. 서킷 브레이킹 프레임워크의 선택: Spring FeignClient + Hystrix 옵션을 사용하여 구현함.  
 2. 시나리오는 주문(order)-->출고지시(deliveyOrder) 시의 연결을 RESTful Request/Response 로 연동하여 구현이 되어있고, 예치금 결제 요청이 과도할 경우 CB 를 통하여 장애격리.  
 3. Hystrix 를 설정: 요청처리 쓰레드에서 처리시간이 300 밀리가 넘어서기 시작하여 어느정도 유지되면 CB 회로가 닫히도록 (요청을 빠르게 실패처리, 차단) 설정
 ```
-
-    
-　  
-　  
 
 
 - application.yml 설정
@@ -335,13 +316,10 @@ kubectl expose deploy gateway --type="LoadBalancer" --port=8080 -n skuser07
 
     
 　  
-
 - 피호출 서비스 "출고지시(deliveyOrder)" 의 임의 부하 처리  Reservation.java(entity)
 
 ![20210215_160633_20](https://user-images.githubusercontent.com/77368612/107915504-f4126580-6fa7-11eb-97a6-9c5f58ca0a46.png)
 
-    
-　  
 　  
 
 `$ siege -c200 -t120S -r10 -v --content-type "application/json" 'http://52.231.9.112:8080/orders POST {"orderId": "1","productId":"500", "orderStatus":"Ordered"}'`
@@ -354,14 +332,11 @@ kubectl expose deploy gateway --type="LoadBalancer" --port=8080 -n skuser07
 * 요청을 어느정도 돌려보내고나니, 기존에 밀린 일들이 처리되었고, 회로를 닫아 요청을 다시 받기 시작
 * 다시 요청이 쌓이기 시작하여 건당 처리시간이 610 밀리를 살짝 넘기기 시작 => 회로 열기 => 요청 실패처리
 ```
-    
 　  
 　  
 ![image](https://user-images.githubusercontent.com/77368724/108197558-e272be80-715d-11eb-995a-904d4d258a55.png)
 
 `운영시스템은 죽지 않고 지속적으로 CB 에 의하여 적절히 회로가 열림과 닫힘이 벌어지면서 자원을 보호하고 있음을 보여줌`
-    
-　  
     
 　  
 　  
@@ -380,7 +355,6 @@ kubectl expose deploy gateway --type="LoadBalancer" --port=8080 -n skuser07
     
 　  
 　  
-
 ### autoscale out 설정 
 
 - kubectl autoscale deploy order --min=1 --max=10 --cpu-percent=15 -n skuser07
@@ -393,15 +367,11 @@ kubectl expose deploy gateway --type="LoadBalancer" --port=8080 -n skuser07
 
 `$ siege -c100 -t60S -r10 -v --content-type "application/json" 'http://52.231.9.112:8080/orders POST {"orderId": "1","productId":"500", "orderStatus":"DeliveryOrderCanceled"}' `
 
-    
-　  
 　  
 - 오토스케일이 어떻게 되고 있는지 모니터링을 걸어둔다:
 
 `watch kubectl get all -n skuser07`
 
-    
-　  
 　  
 - 어느정도 시간이 흐른 후 (약 30초) 스케일 아웃이 벌어지는 것을 확인할 수 있다:
 
@@ -410,8 +380,6 @@ kubectl expose deploy gateway --type="LoadBalancer" --port=8080 -n skuser07
 　  
 　  
     
-　  
-　  
    
 # Zreo-Downtown Deploy
 
@@ -421,30 +389,23 @@ kubectl expose deploy gateway --type="LoadBalancer" --port=8080 -n skuser07
 
 `siege -c200 -t120S -r10 -v --content-type "application/json" 'http://52.231.9.112:8080/orders POST {"orderId": "1","productId":"500", "orderStatus":"Ordered"}'`
     
-　  
-　  
 
 - 새버전으로의 배포 시작
 ```
 az acr build --registry skuser07acr --image skuser07acr.azurecr.io/order:r1 . 
 kubectl set image deploy order order=skuser07acr.azurecr.io/order:r1 -n skuser07
 ```
-    
-　  
 　  
 ### readiness 옵션이 없는 경우 배포 중 서비스 요청처리 실패
 
 ![image](https://user-images.githubusercontent.com/77368724/108208220-181ea400-716c-11eb-9840-a788c940dbce.png)
     
-　  
-　  
    
 ### readiness 옵션 추가
 
 - deployment.yaml 의 readiness probe 의 설정
 
 ![image](https://user-images.githubusercontent.com/77368724/108209006-1c978c80-716d-11eb-9463-405a40c684c1.png)
-    
 　  
 　  
 ```
@@ -458,12 +419,8 @@ kubectl apply -f deployment.yml
 ![image](https://user-images.githubusercontent.com/77368724/108210402-d93e1d80-716e-11eb-8cf3-0ca64d29d564.png)
     
 　  
-　      
-    
 　  
-　  
-   　  
-　  
+   　  　  
 # Self-healing (Liveness Probe)
 
 - deployment.yml 에 Liveness Probe 옵션 추가
