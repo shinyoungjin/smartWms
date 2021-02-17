@@ -204,20 +204,20 @@ http localhost:8082/deliveryOrders/1
 ### 동기식 결제 장애시
 
 ```
-# 결제 (deposit) 서비스를 잠시 내려놓음
-# 예약 처리
-kubectl delete deploy deposit -n skteam02
+# 출고지시(deliveryOrder) 서비스를 잠시 내려놓음
+kubectl delete deploy deliveryorder -n skuser07
 ```
-- 동기식 호출에서는 호출 시간에 따른 타임 커플링이 발생하며, 예치금 결제 시스템이 장애가 나면 예약도 못받는다는 것을 확인
-![20210215_152729_13](https://user-images.githubusercontent.com/77368612/107912870-aa734c00-6fa2-11eb-9b22-b78f27d39cb9.png)
+- 동기식 호출에서는 호출 시간에 따른 타임 커플링이 발생하며, "출고지시(deliveryOrder)" 시스템이 장애가 나면 "주문 취소"를 진행하지 못함
+![image](https://user-images.githubusercontent.com/77368724/108172777-95342400-7140-11eb-93bc-db0638183130.png)
+![image](https://user-images.githubusercontent.com/77368724/108172903-c3196880-7140-11eb-89dc-9cdfbdea5a6f.png)
     
 　  
 　  
 ```
-# 결재(deposit)서비스 재기동
-kubectl create deploy deposit --image=skteam02.azurecr.io/deposit:latest -n skteam02
+# 출고지시(deliveryOrder)서비스 재기동
+kubectl create deploy deliveryorder --image=skuser07acr.azurecr.io/deliveryorder:latest -n skuser07
 ```
-![20210215_152729_14](https://user-images.githubusercontent.com/77368612/107912865-a9421f00-6fa2-11eb-80f8-309050271489.png)
+![image](https://user-images.githubusercontent.com/77368724/108173185-2acfb380-7141-11eb-8585-19a22d76f55b.png)
     
 　  
 　  
