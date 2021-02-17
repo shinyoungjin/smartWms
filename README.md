@@ -55,7 +55,7 @@
 　     
 ### 기능적 요구사항 검증(1)
 
-![image](https://user-images.githubusercontent.com/77368724/108157053-3dd48a80-7125-11eb-8899-04f56fa6b42a.png)
+![image](https://user-images.githubusercontent.com/77368724/108157575-6c9f3080-7126-11eb-942e-c872371b087d.png)
 
     - 고객이 예약서비스에서 식사를 위한 식당을 예약한다.(OK)
     - 고객이 예약 보증금을 결제한다.(OK)
@@ -97,20 +97,35 @@
 
 # 구현
 
-서비스를 로컬에서 실행하는 방법은 아래와 같다 (각자의 포트넘버는 8081 ~ 8084 이다)
+서비스를 로컬에서 실행하는 방법은 아래와 같다
+- 각자의 포트넘버는 8081 ~ 8088 이다
+- 주문,주문취소,출고지시,피킹지시,패킹지시,재고관리,상품관리,고객센터,배송센터 등
 
 ```
-cd reservation
+cd order
 mvn spring-boot:run
 
-cd deposit
+cd deliveryOrder
 mvn spring-boot:run  
 
-cd customercenter
+cd deliveryPicking
 mvn spring-boot:run 
 
-cd restaurant
+cd deliveryPacking
 mvn spring-boot:run 
+
+cd product
+mvn spring-boot:run 
+
+cd stock
+mvn spring-boot:run 
+
+cd customerCenter
+mvn spring-boot:run 
+
+cd deliveryCenter
+mvn spring-boot:run 
+
 ```
     
 　  
