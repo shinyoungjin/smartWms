@@ -155,7 +155,7 @@ http localhost:8081/orders orderId=1 productId=100 orderStatus=Ordered productNa
 http localhost:8081/orders/1
 
 # deliveryOrder 서비스(출고지시)의 출고지시 현황
-http localhost:8084/deliveryOrders/1
+http localhost:8082/deliveryOrders/1
 
 ```
 
@@ -172,6 +172,7 @@ http localhost:8084/deliveryOrders/1
 - CustomerCenter, DeliveryCenter의 pom.xml 파일 설정
 
 ![image](https://user-images.githubusercontent.com/77368724/108161396-49787f00-712e-11eb-97be-c7f9a98848df.png)
+
 
 
 # Req/Resp
