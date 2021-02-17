@@ -385,7 +385,7 @@ kubectl expose deploy gateway --type="LoadBalancer" --port=8080 -n skuser07
 
 - kubectl autoscale deploy order --min=1 --max=10 --cpu-percent=15 -n skuser07
 
-![image](https://user-images.githubusercontent.com/77368724/108195197-cfaaba80-715a-11eb-8e94-ce8aa9fa9592.png)
+![image](https://user-images.githubusercontent.com/77368724/108225449-4b1e6300-717f-11eb-820b-9be8d1f97837.png)
     
 　  
 　  
