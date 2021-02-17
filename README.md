@@ -405,7 +405,7 @@ kubectl expose deploy gateway --type="LoadBalancer" --port=8080 -n skuser07
 　  
 - 어느정도 시간이 흐른 후 (약 30초) 스케일 아웃이 벌어지는 것을 확인할 수 있다:
 
-![20210215_170036_23](https://user-images.githubusercontent.com/77368612/107920537-77d05000-6fb0-11eb-9a64-ebcb5525793e.png)
+![image](https://user-images.githubusercontent.com/77368724/108226438-43ab8980-7180-11eb-877e-7a0b878fcdfd.png)
     
 　  
 　  
