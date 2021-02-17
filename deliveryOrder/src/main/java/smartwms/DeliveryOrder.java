@@ -21,16 +21,19 @@ public class DeliveryOrder {
 
     @PostPersist
     public void onPostPersist(){
-        
-        DeliveryOrdered deliveryOrdered = new DeliveryOrdered();
-        BeanUtils.copyProperties(this, deliveryOrdered);
-        deliveryOrdered.publishAfterCommit();
 
-        /*
-        DeliveryOrderCanceled deliveryOrderCanceled = new DeliveryOrderCanceled();
-        BeanUtils.copyProperties(this, deliveryOrderCanceled);
-        deliveryOrderCanceled.publishAfterCommit();
-        */
+        // 주문취소가 입력이 될 경우
+        if( this.getDeliveryOrderStatus() != null && 
+            this.getDeliveryOrderStatus().equals("DeliveryOrderCanceled") )
+        {
+            DeliveryOrderCanceled deliveryOrderCanceled = new DeliveryOrderCanceled();
+            BeanUtils.copyProperties(this, deliveryOrderCanceled);
+            deliveryOrderCanceled.publishAfterCommit();
+        }else{
+            DeliveryOrdered deliveryOrdered = new DeliveryOrdered();
+            BeanUtils.copyProperties(this, deliveryOrdered);
+            deliveryOrdered.publishAfterCommit();
+        }
 
     }
 
