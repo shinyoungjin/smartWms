@@ -1,4 +1,5 @@
-# 온라인몰 배송물류시스템(OnLineMall Warehouse Management System/Smart-WMS)
+# 온라인몰 배송물류시스템(Smart-WMS)
+# (Warehouse Management System)
 
 ![image](https://user-images.githubusercontent.com/77368612/107967071-044e3300-6ff0-11eb-8d9f-8e4e05f9bf4d.png)   　  
 
