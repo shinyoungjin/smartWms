@@ -20,10 +20,24 @@ public class Order {
 
     @PostPersist
     public void onPostPersist(){
-        // 초기 주문 orderStatus : Ordered
-        Ordered ordered = new Ordered();
-        BeanUtils.copyProperties(this, ordered);
-        ordered.publishAfterCommit();
+
+        // 주문 취소를 req/resq 방식으로 변경, 부하테스트를 위함
+        if(this.getOrderStatus().equals("DeliveryOrderCanceled")){
+
+            smartwms.external.DeliveryOrder deliveryOrder = new smartwms.external.DeliveryOrder();
+            deliveryOrder.setOrderId            (this.getOrderId());
+            deliveryOrder.setDeliveryOrderStatus("DeliveryOrderCanceled");
+            
+            // mappings goes here
+            OrderApplication.applicationContext.getBean(smartwms.external.DeliveryOrderService.class)
+                .deliveryCancel(deliveryOrder);
+                
+        }else{
+            // 초기 주문 orderStatus : Ordered
+            Ordered ordered = new Ordered();
+            BeanUtils.copyProperties(this, ordered);
+            ordered.publishAfterCommit();
+        }
     }
 
     @PreRemove
@@ -50,7 +64,7 @@ public class Order {
     @PrePersist
     public void onPrePersist(){ 
         try {
-            Thread.currentThread().sleep((long) (800 + Math.random() * 220));
+            Thread.currentThread().sleep((long) (1000 + Math.random() * 220));
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
