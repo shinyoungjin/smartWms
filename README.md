@@ -162,23 +162,17 @@ http localhost:8084/deliveryOrders/1
 
 # Polyglot
 
-Reservation, Deposit, Customerservice는 H2로 구현하고 Restaurant 서비스의 경우 Hsql로 구현하여 MSA간의 서로 다른 종류의 Database에도 문제없이 작동하여 다형성을 만족하는지 확인하였다.
+- "Order,DeliveryOrder,DeliveryPicking,DeliveryPacking,Stock,Product"는 H2로 구현하고, "CustomerCenter,DeliveryCenter" 서비스의 경우 Hsql로 구현하여 MSA간의 서로 다른 종류의 Database에도 문제없이 작동하여 다형성을 만족하는지 확인하였다.
 
-- reservation, deposit, customercenter의 pom.xml 파일 설정
+- Order, DeliveryOrder, DeliveryPicking, DeliveryPacking, Stock, Product의 pom.xml 파일 설정
 
-![20210215_151200_10](https://user-images.githubusercontent.com/77368612/107911566-359f1280-6fa0-11eb-98ff-a15e7f95d942.png)
-    
-　  
+![image](https://user-images.githubusercontent.com/77368724/108161515-90667480-712e-11eb-821c-7f9dcbeb35b9.png)
+
  
-- restaurant의 pom.xml 파일 설정
+- CustomerCenter, DeliveryCenter의 pom.xml 파일 설정
 
-![20210215_151200_9](https://user-images.githubusercontent.com/77368612/107911570-3637a900-6fa0-11eb-818e-df269a61ae2d.png)
-    
-　  
-    
-　  
-　  
-   
+![image](https://user-images.githubusercontent.com/77368724/108161396-49787f00-712e-11eb-97be-c7f9a98848df.png)
+
 
 # Req/Resp
 ```
