@@ -326,9 +326,9 @@ kubectl expose deploy gateway --type="LoadBalancer" --port=8080 -n skuser07
 
     
 　  
-- 피호출 서비스 "출고지시(deliveyOrder)" 의 임의 부하 처리  Reservation.java(entity)
+- 피호출 서비스 "출고지시(deliveyOrder)" 의 임의 부하 처리  Order.java(entity)
 
-![20210215_160633_20](https://user-images.githubusercontent.com/77368612/107915504-f4126580-6fa7-11eb-97a6-9c5f58ca0a46.png)
+![image](https://user-images.githubusercontent.com/77368724/108282750-79bf2c80-71c5-11eb-931f-7d941ccab9a4.png)
 
 　  
 
