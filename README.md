@@ -207,11 +207,10 @@ http localhost:8082/deliveryOrders/1
 # 출고지시(deliveryOrder) 서비스를 잠시 내려놓음
 kubectl delete deploy deliveryorder -n skuser07
 ```
-- 동기식 호출에서는 호출 시간에 따른 타임 커플링이 발생하며, "출고지시(deliveryOrder)" 시스템이 장애가 나면 "주문 취소"를 진행하지 못함
+- 동기식 호출에서는 호출 시간에 따른 타임 커플링이 발생하며,
+- "출고지시(deliveryOrder)" 시스템이 장애가 나면 "주문 취소"를 진행하지 못함
 ![image](https://user-images.githubusercontent.com/77368724/108172777-95342400-7140-11eb-93bc-db0638183130.png)
 ![image](https://user-images.githubusercontent.com/77368724/108172903-c3196880-7140-11eb-89dc-9cdfbdea5a6f.png)
-    
-　  
 　  
 ```
 # 출고지시(deliveryOrder)서비스 재기동
