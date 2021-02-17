@@ -227,7 +227,9 @@ kubectl create deploy deliveryorder --image=skuser07acr.azurecr.io/deliveryorder
 　  
    
 # Gateway
+
 - gateway > application.yml
+
 ![image](https://user-images.githubusercontent.com/77368724/108174719-286e5900-7143-11eb-8fae-179450a7be10.png)
     
 　  
