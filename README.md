@@ -320,7 +320,7 @@ kubectl expose deploy gateway --type="LoadBalancer" --port=8080 -n skuser07
 # Circuit Breaker
 ```
 1. 서킷 브레이킹 프레임워크의 선택: Spring FeignClient + Hystrix 옵션을 사용하여 구현함.  
-2. 시나리오는 예약(reservation)-->예치금 결제(deposit) 시의 연결을 RESTful Request/Response 로 연동하여 구현이 되어있고, 예치금 결제 요청이 과도할 경우 CB 를 통하여 장애격리.  
+2. 시나리오는 주문(order)-->출고지시(deliveyOrder) 시의 연결을 RESTful Request/Response 로 연동하여 구현이 되어있고, 예치금 결제 요청이 과도할 경우 CB 를 통하여 장애격리.  
 3. Hystrix 를 설정: 요청처리 쓰레드에서 처리시간이 300 밀리가 넘어서기 시작하여 어느정도 유지되면 CB 회로가 닫히도록 (요청을 빠르게 실패처리, 차단) 설정
 ```
 
@@ -331,12 +331,12 @@ kubectl expose deploy gateway --type="LoadBalancer" --port=8080 -n skuser07
 
 - application.yml 설정
 
-![20210215_160633_19](https://user-images.githubusercontent.com/77368612/107915501-f379cf00-6fa7-11eb-9134-0aa25f7ce18b.png)
+![image](https://user-images.githubusercontent.com/77368724/108197876-46958280-715e-11eb-9fce-74fa3746396f.png)
 
     
 　  
 
-- 피호출 서비스(예치금 결제:deposit) 의 임의 부하 처리  Reservation.java(entity)
+- 피호출 서비스 "출고지시(deliveyOrder)" 의 임의 부하 처리  Reservation.java(entity)
 
 ![20210215_160633_20](https://user-images.githubusercontent.com/77368612/107915504-f4126580-6fa7-11eb-97a6-9c5f58ca0a46.png)
 
@@ -344,11 +344,11 @@ kubectl expose deploy gateway --type="LoadBalancer" --port=8080 -n skuser07
 　  
 　  
 
-`$ siege -c100 -t60S -r10 -v --content-type "application/json" 'http://52.231.94.89:8080/reservations POST {"restaurantNo": "10", "day":"20210214"}'`
+`$ siege -c200 -t120S -r10 -v --content-type "application/json" 'http://52.231.9.112:8080/orders POST {"orderId": "1","productId":"500", "orderStatus":"Ordered"}'`
 
-- 부하테스터 siege 툴을 통한 서킷 브레이커 동작 확인 (동시사용자 100명, 60초 진행)
+- 부하테스터 siege 툴을 통한 서킷 브레이커 동작 확인 (동시사용자 200명, 120초 진행)
 
-![20210215_160633_7](https://user-images.githubusercontent.com/77368612/107916124-1bb5fd80-6fa9-11eb-8ee7-8a340d7a7682.png)
+![image](https://user-images.githubusercontent.com/77368724/108197378-a63f5e00-715d-11eb-9f72-ab013b4f368c.png)
 ```
 * 요청이 과도하여 CB를 동작함 요청을 차단
 * 요청을 어느정도 돌려보내고나니, 기존에 밀린 일들이 처리되었고, 회로를 닫아 요청을 다시 받기 시작
@@ -357,7 +357,7 @@ kubectl expose deploy gateway --type="LoadBalancer" --port=8080 -n skuser07
     
 　  
 　  
-![20210215_152121_8](https://user-images.githubusercontent.com/77368612/107915450-d93ff100-6fa7-11eb-8ac6-78c508828b29.png)
+![image](https://user-images.githubusercontent.com/77368724/108197558-e272be80-715d-11eb-995a-904d4d258a55.png)
 
 `운영시스템은 죽지 않고 지속적으로 CB 에 의하여 적절히 회로가 열림과 닫힘이 벌어지면서 자원을 보호하고 있음을 보여줌`
     
