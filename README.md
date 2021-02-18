@@ -12,7 +12,6 @@
 1. 출고지시가 완료되면, 상품 재고에 해당 재고를 할당(Assignment) 처리한다.
 1. 출고지시가 완료되면, 피킹지시(Picking)가 생성이 된다.
 1. 피킹지시가 완료되면, 패킹지시(Packing)가 생성이 된다.
-1. 패킹지시가 완료되면, 재고할당을 풀고, 재고를 처리한다.
 1. 고객은 주문을 취소할 수 있다.
 1. 고객은 주문 상태를 조회할 수 있다.
 1. 담당자는 배송센터 처리 건수를 조회 할수 있다.
@@ -21,7 +20,7 @@
 `비기능적 요구사항`
 1. 트랜잭션
     1. 고객의 주문 취소시 배송 출고지시 취소가 완료된 이후 주문 취소 처리가 가능하다.(Sync)
-    1. 주문 완료 이후 배송센터에 출고지시 전달한다.(Async)
+    1. 주문 완료 이후 배송센터에 출고지시 전달한다.(Async,Correlation)
     1. 출고지시 완료 후 고객(주문Entity)에게 배송상태를 전달한다.(Async, Saga)
     1. 상품이 등록이 되면 재고 테이블에 데이터를 전달한다.(Async)
 1. 장애격리
@@ -68,7 +67,6 @@
     - 출고지시가 완료되면, 상품 재고에 해당 재고를 할당(Assignment) 처리한다.(OK)
     - 출고지시가 완료되면, 피킹지시(Picking)가 생성이 된다.(OK)
     - 피킹지시가 완료되면, 패킹지시(Packing)가 생성이 된다.(OK)
-    - 패킹지시가 완료되면, 재고할당을 풀고, 재고를 처리한다.(OK)
     - 상품이 입력이 되면, 재고를 증가시킨다.(OK)
     　  
 　  
@@ -326,9 +324,9 @@ kubectl expose deploy gateway --type="LoadBalancer" --port=8080 -n skuser07
 
     
 　  
-- 피호출 서비스 "출고지시(deliveyOrder)" 의 임의 부하 처리  Reservation.java(entity)
+- 피호출 서비스 "출고지시(deliveyOrder)" 의 임의 부하 처리  Order.java(entity)
 
-![20210215_160633_20](https://user-images.githubusercontent.com/77368612/107915504-f4126580-6fa7-11eb-97a6-9c5f58ca0a46.png)
+![image](https://user-images.githubusercontent.com/77368724/108282750-79bf2c80-71c5-11eb-931f-7d941ccab9a4.png)
 
 　  
 
