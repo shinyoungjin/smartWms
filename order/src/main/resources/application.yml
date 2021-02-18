@@ -30,13 +30,23 @@ spring:
         event-out:
           destination: wms
           contentType: application/json
-
+feign: 
+  hystrix: 
+    enabled: true 
+ 
+hystrix: 
+  command: 
+    default: 
+      execution.isolation.thread.timeoutInMilliseconds: 300
 logging:
   level:
     org.hibernate.type: trace
     org.springframework.cloud: debug
 server:
   port: 8081
+api:
+  deliveryorder:
+    url: http://localhost:8082
 ---
 
 spring:
@@ -62,3 +72,16 @@ spring:
         event-out:
           destination: wms
           contentType: application/json
+feign: 
+  hystrix: 
+    enabled: true 
+hystrix: 
+  command: 
+    default: 
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 300
+api:
+  deliveryorder:
+    url: http://deliveryorder:8080

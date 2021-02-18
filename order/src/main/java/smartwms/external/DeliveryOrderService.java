@@ -10,7 +10,8 @@ import java.util.Date;
 
 @FeignClient(name="deliveryOrder", url="http://deliveryOrder:8080")
 public interface DeliveryOrderService {
-
+    // ${api.deliveryorder.url}
+    // http://deliveryOrder:8080
     @RequestMapping(method= RequestMethod.POST, path="/deliveryOrders")
     public void deliveryCancel(@RequestBody DeliveryOrder deliveryOrder);
 
